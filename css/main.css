@@ -1,0 +1,28 @@
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.container {
+
+  height: 90vh;
+  width: 100vw;
+}
+.top_bottom {
+  width: 100vw;
+  height: 8vh;
+}
+header {
+  background-color: #9A9A8B;
+  border-bottom: solid black 2px
+}
+footer {
+  background-color: #686859;
+}
+#middle {
+  height:82%
+}
+#track_div {
+  width:50%;
+  background-image: url('../resources/tracks.jpg');
+}
