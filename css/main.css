@@ -1,11 +1,11 @@
 @font-face {
-    font-family: 'Avenir'; /*a name to be used later*/
+    font-family: 'AvenirMine'; /*a name to be used later*/
     src: url('../fonts/AvenirNextLTPro-Regular.otf'); /*URL to font*/
 }
 body {
   margin: 0;
   padding: 0;
-  font-family: "Avenir"
+  font-family: "AvenirMine";
 }
 .container {
  min-height: 622px;
@@ -13,9 +13,8 @@ body {
   width: 100vw;
 }
 .top_bottom {
-  width: 100vw;
-  height: 8vh;
-  padding-top: 10%;
+  width: 100%;
+  height: 11vh;
 }
 header {
   background-color: #9A9A8B;
@@ -23,9 +22,13 @@ header {
 }
 footer {
   background-color: #686859;
+  padding-top: 10px;
+}
+footer > p {
+  margin-left: 10px
 }
 #middle {
-  height:82%
+  height:72%
 }
 
 #track_div {
@@ -48,7 +51,7 @@ footer {
 
 .tracks {
   min-width: 100px;
-  height: 24vh;
+  height: 20vh;
   width: 21vh;
   background-color: black;
   margin: 0 auto;
@@ -68,17 +71,22 @@ footer {
 }
 #track_bin {
   height: 25%;
-  width: 55%;
+  width: 75%;
   margin: 0 auto;
-  margin-top: 54%;
-  text-align:center
+  margin-top: 150px;
+  text-align:center;
+}
+#track_bin > h1 {
+  font-size: 44px;
+  color: #4C0066
 }
 #choose_tracks_btn{
+  border: none;
   background-color: #353526;
   color: white;
   border-radius: 5px;
   height: 50px;
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
   font-size: 56%
 }
