@@ -25,7 +25,8 @@ footer {
   padding-top: 10px;
 }
 footer > p {
-  margin-left: 10px
+  color: white;
+  margin-left: 10px;
 }
 #middle {
   height:72%
