@@ -1,13 +1,17 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
+
   var httpRequest = new XMLHttpRequest();
 
-  httpRequest.onreadystatechange = function(){
+  httpRequest.onreadystatechange = function(event){
+
     if (httpRequest.readyState === 4) {
        if(httpRequest.status < 400) {
-         var data   = JSON.parse(httpRequest.responseText);
-         console.log(data);
          var trackDiv    = document.getElementById('track_div')
+         var bin         = document.getElementById('center')
+         var clrBtn      = document.getElementById('clear-btn')
+         var postBtn     = document.getElementById('submit-btn')
+         var data        = JSON.parse(httpRequest.responseText);
          var alb1        = data.results[0];
          var alb2        = data.results[1];
          var alb3        = data.results[2];
@@ -16,12 +20,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
          var albArr      = [alb1,alb2,alb3,alb4,alb5]
          //map button strings to objects to call them in eventhandler later
          var map         = {'alb1':alb1,'alb2':alb2,'alb3':alb3,'alb4':alb4,'alb5':alb5};
-         var bin         = document.getElementById('center')
-         var clrBtn      = document.getElementById('clear-btn')
+
          //set count to dynamically create input variable ids
          var count       = 1;
          var btns        = ['alb1','alb2','alb3','alb4','alb5']
          //dynamically create buttons from json images
+
          albArr.forEach(alb => {
                 var input       = document.createElement('input')
                 var div         = document.createElement('div')
@@ -34,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 div             .appendChild(input)
                 count++
          })
+
          //dynamically link input buttons to add info to bin
         btns.forEach(bttn => {
                var bt = document.getElementById(bttn);
@@ -41,14 +46,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
                  var p       = document.createElement("p")
                  p.id        = map[bt.id].id
                  p.innerHTML = `Artist: ${map[bt.id].artist}<br>
-                                 Title: ${map[bt.id].title}`
-                 bin.appendChild(p)
-
+                                Title: ${map[bt.id].title}`
+                 bin        .appendChild(p)
+                 trackDiv   .removeChild(bt.parentNode)
                })
         })
         //clear bin
        clrBtn.addEventListener('click',function(){
-              bin.innerHTML = "";
+              location.reload();
+
+       })
+       postBtn.addEventListener('click',function(){
+         var ps = bin.childNodes;
+         var xhttp = new XMLHttpRequest();
+ xhttp.onreadystatechange = function() {
+   if (xhttp.readyState == 4 && xhttp.status == 200) {
+     console.log(xhttp.responseText);
+   }
+ };
+ xhttp.open("POST", "https://lit-fortress-6467.herokuapp.com/post", true);
+ xhttp.send(bin.innerHTML);
        })
          }
 
@@ -57,4 +74,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
 httpRequest.open('GET', 'https://lit-fortress-6467.herokuapp.com/object');
 httpRequest.send();
 });
-//<input type="image" src="logg.png" name="saveForm" class="btTxt submit" id="saveForm" />
