@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       albNum3     = albNum();
   var trackDiv    = document.getElementById('track_div')
   var httpRequest = new XMLHttpRequest();
+  var tracksBtn  = document.getElementById('choose_tracks_btn')
 
   httpRequest.onreadystatechange = function(){
     if (httpRequest.readyState === 4) {
@@ -26,6 +27,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 trackDiv.appendChild(div)
                 div.appendChild(img)
          })
+        tracksBtn.addEventListener('click',function(){
+          window.location.href = 'index2.html'
+        })
+         //onclick="location.href='http://google.com'
          }
 
        }
