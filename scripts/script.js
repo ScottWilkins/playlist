@@ -1,40 +1,24 @@
-document.addEventListener("DOMContentLoaded", function(event) {
-  var arr         = [0,1,2,3,4]
-  function splicer() {return Math.floor(Math.random() * arr.length)}
-  function albNum()  {return arr.splice(splicer(),1)[0];}
-  var albNum1     = albNum(),
-      albNum2     = albNum(),
-      albNum3     = albNum();
-  var trackDiv    = document.getElementById('track_div')
-  var httpRequest = new XMLHttpRequest();
-  var tracksBtn  = document.getElementById('choose_tracks_btn')
+$(document).ready(function(){
+  $.get( "https://lit-fortress-6467.herokuapp.com/object", function( data ) {
 
-  httpRequest.onreadystatechange = function(){
-    if (httpRequest.readyState === 4) {
-       if(httpRequest.status < 400) {
-         var data   = JSON.parse(httpRequest.responseText);
-         console.log(data);
-         var alb1   = data.results[albNum1].cover_art;
-         var alb2   = data.results[albNum2].cover_art;
-         var alb3   = data.results[albNum3].cover_art;
-         var albArr = [alb1,alb2,alb3]
-         albArr.forEach(alb => {
-                var img = document.createElement('img')
-                var div = document.createElement('div')
-                div.className = "tracks";
-                img.className = "covers"
-                img.setAttribute("src", `./images/${alb}`);
-                trackDiv.appendChild(div)
-                div.appendChild(img)
-         })
-        tracksBtn.addEventListener('click',function(){
-          window.location.href = 'index2.html'
-        })
-         //onclick="location.href='http://google.com'
-         }
+var $track    = $('#track_div')
+var dataArr   = data.results;
+var selectArr = [];
+//create function to randomly select designated number of tracks from api
+function picker(arrLength, numPicks){
+  if(!numPicks)return
+  var track = dataArr.splice(Math.floor(Math.random()*arrLength),1)
+  selectArr.push(track["0"])
+  picker(arrLength-1,numPicks-1)
+}
 
-       }
-    }
-httpRequest.open('GET', 'https://lit-fortress-6467.herokuapp.com/object');
-httpRequest.send();
+picker(dataArr.length, 3)
+
+selectArr.forEach(alb=> {
+  var $div = $('<div>').css('background-image', `url(./images/${alb.cover_art})`)
+                       .addClass('tracks');
+  $track.append($div)
+})
 });
+
+})
