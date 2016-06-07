@@ -9,8 +9,12 @@
   <body>
   <div class="container">
 
- <header class="top_bottom"><div>click an album to add its tracks to the bin</div></header>
-    <div id="middle">
+ <header class="top_bottom"><div>
+   <input type="text" name="name" value="" id="title" class="left_float" placeholder="enter artist name">
+    <button type="button" name="button" id="button" class="left_float">submit</button>
+   <div id="artists" class="float_left"></div>
+ </div></header>
+      <div id="middle">
       <div id="track_div"></div>
       <div id="center"></div>
       <button type="button" name="button" class="btn" id="clear-btn">clear tracks</button>
