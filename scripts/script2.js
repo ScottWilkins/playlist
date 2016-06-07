@@ -7,9 +7,10 @@ $(document).ready(function(){
       postObj    = {results:[]};
 
  //wrap in function to clear bin later
- function populate(){
+
    var button = $('#button');
 button.on('click', function(){
+  $('#artists').html('')
   var artist = $('#title').val();
 
   $.get(`https://api.spotify.com/v1/search?q=${artist}&type=artist`, function(data){
@@ -33,64 +34,33 @@ button.on('click', function(){
            $input.css('background-image', `url(${alb.images[1].url})`).
                   attr('type', 'button').
                   addClass('tracks').
-                  attr('id', `${alb.id}`);
+                  attr('id', alb.id);
                   nameArray.push(alb.name.toLowerCase())
-        //           //put buttons in array for grouping functionality
-          $tracks.append($input)
+           $tracks.append($input)
         }
-      console.log(nameArray);
+
       })
 
-        // //create clickable album covers
-        // data.results.forEach(item=> {
-        //    var $input   = $('<input>');
-        //    $input.css('background-image', `url(./images/${item.cover_art})`).
-        //           attr('type', 'button').
-        //           addClass('tracks').
-        //           attr('id', `${item['id']}`);
-        //           //put buttons in array for grouping functionality
-        //    buttons.push($input)
-        //    $tracks.append($input)
-        //  })
+         //send button info to bin
+          $('.tracks').on('click',function(){
+              $bin.html("")
+              data.items.forEach(item => {
+                  if(item.id == $(this)[0].id){
+                      $.get(`https://api.spotify.com/v1/albums/${item.id}/tracks`, function(trax){
+                      trax.items.forEach(Track => {
+                      $bin.append(`<p>${Track.name}</p>`)
+                           });
+                        })
+                      }
+                    })
+                  })
+               })
+             })
+           })
+         })
 
-    })
-  })
 
-     })
-    })
 
-  //   //create clickable album covers
-  //   data.results.forEach(item=> {
-  //      var $input   = $('<input>');
-  //      $input.css('background-image', `url(./images/${item.cover_art})`).
-  //             attr('type', 'button').
-  //             addClass('tracks').
-  //             attr('id', `${item['id']}`);
-  //             //put buttons in array for grouping functionality
-  //      buttons.push($input)
-  //      $tracks.append($input)
-  //    })
-  //    //send button info to bin
-  //    buttons.forEach(button => {
-  //      button.on('click',function(){
-  //        var $info  = $('<p>');
-  //        var title, album;
-  //          data.results.forEach(item => {
-  //            if(item.id == $(this)[0].id){
-  //              artist = item.artist;
-  //              title  = item.title;
-  //              //populate the post data with objects related to selected buttons
-  //              postObj.results.push(item)
-  //            }
-  //          })
-  //      $info.html(`${artist}<br>${title}`)
-  //      $bin.append($info);
-  //      //remove button from choices
-  //      $(this).remove();
-  //    })
-  //  })
-
-}
   //clear the bin and repopulate button choices
   $clrBtn.on('click',function(){
     $bin.html('')
@@ -102,6 +72,6 @@ button.on('click', function(){
        console.log(data);
 });
   })
-   populate()
+
 
 })
