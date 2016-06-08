@@ -1,12 +1,7 @@
 $(document).ready(function(){
-  var $clrBtn    = $('#clear-btn'),
-      $submitBtn = $('#submit-btn'),
-      $tracks    = $('#track_div'),
+  var $tracks    = $('#track_div'),
       $bin       = $('#center'),
-      count      = 0,
-      postObj    = {results:[]};
-
-   var button = $('#button');
+      button     = $('#button');
 button.on('click', function(){
   $('#artists').html('')
   var artist = $('#title').val();
@@ -45,8 +40,7 @@ button.on('click', function(){
                       $.get(`https://api.spotify.com/v1/albums/${item.id}/tracks`, function(trax){
                       trax.items.forEach(Track => {
                       TrackArr.push(Track.id)
-
-                           });
+                      });
                       var TrackId = TrackArr.join(",")
                       $("iframe").attr("src",`https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:${TrackArr}`)
                          })
@@ -57,20 +51,4 @@ button.on('click', function(){
              })
            })
          })
-
-
-
-  //clear the bin and repopulate button choices
-  $clrBtn.on('click',function(){
-    $bin.html('')
-    $tracks.html('')
-    populate()
-  })
-  $submitBtn.on('click',function(){
-    $.post( "https://lit-fortress-6467.herokuapp.com/post", postObj, function( data ) {
-       console.log(data);
-});
-  })
-
-
 })

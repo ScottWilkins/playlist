@@ -103,3 +103,7 @@ margin: 10px;
 .artists {
   font-size: .75em;
 }
+iframe {
+  width: 100%;
+  height: 60%;
+}
