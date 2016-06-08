@@ -1,12 +1,10 @@
 $(document).ready(function(){
   var $clrBtn    = $('#clear-btn'),
-      $submitBtn = $('#submit-btn');
-  var $tracks    = $('#track_div'),
+      $submitBtn = $('#submit-btn'),
+      $tracks    = $('#track_div'),
       $bin       = $('#center'),
       count      = 0,
       postObj    = {results:[]};
-
- //wrap in function to clear bin later
 
    var button = $('#button');
 button.on('click', function(){
@@ -25,10 +23,7 @@ button.on('click', function(){
     $tracks.html("");
     var nameArray = [];
     $.get(`https://api.spotify.com/v1/artists/${$(this).context.id}/albums`, function(data){
-
       data.items.forEach(alb => {
-        // console.log(alb.name);
-        // console.log(alb.images[1].url);
            if(nameArray.indexOf(alb.name.toLowerCase()) === -1){
            var $input   = $('<input>');
            $input.css('background-image', `url(${alb.images[1].url})`).
@@ -45,13 +40,17 @@ button.on('click', function(){
           $('.tracks').on('click',function(){
               $bin.html("")
               data.items.forEach(item => {
+                var TrackArr = [];
                   if(item.id == $(this)[0].id){
                       $.get(`https://api.spotify.com/v1/albums/${item.id}/tracks`, function(trax){
                       trax.items.forEach(Track => {
-                      $bin.append(`<p>${Track.name}</p>`)
+                      TrackArr.push(Track.id)
+
                            });
-                        })
-                      }
+                      var TrackId = TrackArr.join(",")
+                      $("iframe").attr("src",`https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:${TrackArr}`)
+                         })
+                       }
                     })
                   })
                })
